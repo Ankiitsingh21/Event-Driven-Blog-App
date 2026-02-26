@@ -8,8 +8,9 @@ app.use(cors());
 
 const posts = {};
 
-const handleEvent=(type,data)=>{
-   if (type === 'PostCreated') {
+// query/index.js
+const handleEvent = (type, data) => {
+  if (type === 'PostCreated') {
     const { id, title } = data;
     posts[id] = { id, title, comments: [] };
   }
@@ -17,27 +18,20 @@ const handleEvent=(type,data)=>{
   if (type === 'CommentCreated') {
     const { id, content, postId, status } = data;
     const post = posts[postId];
-
-    if (!post) return res.send({});        // ✅ GUARD — post not in memory, skip
-
+    if (!post) return;   // ✅ just return, no res here
     post.comments.push({ id, content, status });
   }
 
   if (type === 'CommentUpdated') {
     const { id, content, postId, status } = data;
     const post = posts[postId];
-
-    if (!post) return res.send({});        // ✅ GUARD — post not in memory, skip
-
-    const comment = post.comments.find((comment) => { return comment.id === id });
-
-    if (!comment) return res.send({});     // ✅ GUARD — comment not found, skip
-
+    if (!post) return;   // ✅
+    const comment = post.comments.find((c) => c.id === id);
+    if (!comment) return; // ✅
     comment.status = status;
     comment.content = content;
-    // ❌ DO NOT push here — you're updating, not adding a new comment
   }
-}
+};
 
 app.get('/posts', (req, res) => {
   // console.log(posts);

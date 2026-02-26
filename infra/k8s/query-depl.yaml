@@ -15,6 +15,8 @@ spec:
       containers:
         - name: query
           image: ankiitsingh21/query
+          ports:
+            - containerPort: 4002
 ---
 apiVersion: v1
 kind: Service
