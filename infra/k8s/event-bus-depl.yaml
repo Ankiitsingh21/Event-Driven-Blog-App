@@ -17,7 +17,7 @@ spec:
           image: ankiitsingh21/event-bus
           imagePullPolicy: Never
           ports:
-            - containerPort: 4000
+            - containerPort: 4005
 ---
 apiVersion: v1
 kind: Service
