@@ -11,7 +11,7 @@ spec:
       http:
         paths:
           - path: /posts
-            # pathType: Prefix
+            pathType: Prefix
             backend:
               service:
                 name: posts-clusterip-srv
